@@ -1,0 +1,23 @@
+# dependencies
+node_modules/
+package-lock.json
+
+# build output
+dist/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# environment
+.env
+.env.local
+
+# blueprint
+.blueprint/
