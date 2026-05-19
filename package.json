@@ -2,6 +2,7 @@
   "name": "ccaf-reviewer",
   "homepage": "https://jenmiradora.github.io/ccaf-reviewer/",
   "private": true,
+  "homepage": "https://jenmiradora.github.io/ccfa-reviewer/",
   "version": "0.0.0",
   "type": "module",
   "scripts": {
