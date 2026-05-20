@@ -320,7 +320,7 @@ export default function App() {
   const [view, setView] = useState("guide");
   const tabs = [{ id: "guide", label: "Study Guide", icon: "📖" }, { id: "ref", label: "Quick Ref", icon: "⚡" }, { id: "exam", label: "Practice", icon: "✍️" }];
   return (
-    <div style={{ fontFamily: "'DM Sans', -apple-system, sans-serif", maxWidth: 680, margin: "0 auto", minHeight: "100vh", "--text-primary": "#1a1a2e", "--text-secondary": "#555570", "--bg-secondary": "#f8f8fc", "--border-color": "#e2e2ee" }}>
+    <div style={{ fontFamily: "'DM Sans', -apple-system, sans-serif", maxWidth: 680, margin: "0 auto", minHeight: "100vh", backgroundColor: "white", color: "#1a1a2e", "--text-primary": "#1a1a2e", "--text-secondary": "#555570", "--bg-secondary": "#f8f8fc", "--border-color": "#e2e2ee" }}>
       <style>{`@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600;700&display=swap');@media(prefers-color-scheme:dark){:root{--text-primary:#e8e8f0!important;--text-secondary:#9999b0!important;--bg-secondary:#1e1e2e!important;--border-color:#2e2e42!important}}`}</style>
       <div style={{ padding: "22px 18px 6px", textAlign: "center", borderBottom: "1px solid var(--border-color)" }}>
         <div style={{ fontSize: 9, fontWeight: 700, letterSpacing: "2px", textTransform: "uppercase", color: "#2A9D8F", marginBottom: 3 }}>CCAF Exam Reviewer v2</div>
