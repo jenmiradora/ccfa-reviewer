@@ -12,25 +12,16 @@
     }
 
     :root {
-      --text-primary: #1a1a2e;
-      --text-secondary: #555570;
-      --bg-secondary: #f8f8fc;
-      --border-color: #e2e2ee;
+      --text-primary: #000000;
+      --text-secondary: #333333;
+      --bg-secondary: #f5f5f5;
+      --border-color: #d0d0d0;
       --color-teal: #2A9D8F;
       --color-blue: #457B9D;
       --color-yellow: #E9C46A;
       --color-orange: #E76F51;
       --color-purple: #9B5DE5;
       --color-red: #E63946;
-    }
-
-    @media (prefers-color-scheme: dark) {
-      :root {
-        --text-primary: #e8e8f0;
-        --text-secondary: #9999b0;
-        --bg-secondary: #1e1e2e;
-        --border-color: #2e2e42;
-      }
     }
 
     body {
@@ -663,11 +654,26 @@
       3: { label: "Advanced", icon: "🚀", desc: "Architecture & orchestration", bg: "#E63946" }
     };
 
+    // BACKUP TEST SETS (10 additional exam question sets)
+    const BACKUP_TEST_SETS = [
+      { name: "Test Set 2", questions: [{ question: "When using batch processing for API requests, what is a critical limitation to consider?", options: ["No latency SLA and up to 24-hour processing time", "Cannot process tool use in a single batch request", "Not suitable for blocking pre-merge checks", "All of the above"], correct: 3, domain: "D4", color: "#457B9D", explanation: "Batch API is inappropriate for real-time blocking tasks and doesn't guarantee latency. Use only for non-blocking workflows like overnight reports." }, { question: "What is the primary mechanism LLMs use to select which tool to invoke?", options: ["Tool execution speed", "Tool descriptions", "Parameter count", "Alphabetical order"], correct: 1, domain: "D2", color: "#E9C46A", explanation: "Tool descriptions are THE PRIMARY selection mechanism. Well-written, detailed descriptions enable reliable tool routing." }, { question: "In a multi-agent system, what happens to context inheritance in subagents?", options: ["Context automatically inherits from coordinator", "Subagents have ISOLATED context with no inheritance", "Context partially inherits only for tools", "Context is shared in read-only mode"], correct: 1, domain: "D1", color: "#E63946", explanation: "Subagents have completely isolated context. All context must be EXPLICITLY provided in the Task tool parameters." }, { question: "Which CLAUDE.md file is shared with the team via version control?", options: ["~/.claude/CLAUDE.md (user-level)", ".claude/CLAUDE.md (project-level)", "Both are shared equally", "Neither is shared"], correct: 1, domain: "D3", color: "#E76F51", explanation: "Project-level .claude/CLAUDE.md is version-controlled and shared. User-level ~/.claude/CLAUDE.md is personal and NOT shared." }, { question: "What does the -p flag accomplish in Claude Code CI/CD?", options: ["Enables parallel processing", "Prevents interactive hangs in non-interactive mode", "Enables preview mode", "Prioritizes execution"], correct: 1, domain: "D3", color: "#E76F51", explanation: "-p/--print is CRITICAL for CI/CD as it prevents the program from waiting for interactive input, which would hang pipelines." }] },
+      { name: "Test Set 3", questions: [{ question: "How does extended thinking differ from normal reasoning in Claude?", options: ["It's just regular thinking with a longer timeout", "Produces BOTH a reasoning process AND final answer", "Only available for math problems", "Not available in the current Claude models"], correct: 1, domain: "D4", color: "#457B9D", explanation: "Extended thinking generates two outputs: visible reasoning steps + final answer. It's separate from regular reasoning." }, { question: "What is the Fisher-Yates shuffle algorithm primarily used for?", options: ["Encrypting sensitive data", "Randomizing array elements uniformly", "Sorting arrays efficiently", "Detecting duplicate values"], correct: 1, domain: "D4", color: "#457B9D", explanation: "Fisher-Yates provides unbiased randomization of arrays. Each permutation has equal probability." }, { question: "In the hub-and-spoke multi-agent pattern, who controls all inter-subagent communication?", options: ["Each subagent communicates directly", "The coordinator manages ALL communication", "Subagents communicate through shared memory", "A central message broker"], correct: 1, domain: "D1", color: "#E63946", explanation: "The COORDINATOR is the hub that manages all subagent interactions. Subagents do NOT communicate directly with each other." }, { question: "What does context: fork do in a skill configuration?", options: ["Creates a backup of the skill", "Runs skill in isolated sub-agent, preventing output pollution", "Forks the skill into multiple versions", "None of the above"], correct: 1, domain: "D3", color: "#9B5DE5", explanation: "context: fork isolates the skill execution, so verbose output from discovery/analysis doesn't clutter the main conversation." }, { question: "Which is the LEAST effective approach for ensuring consistent formatted output?", options: ["tool_use with JSON schemas", "Few-shot examples", "Detailed system prompts alone", "Temperature setting"], correct: 2, domain: "D4", color: "#457B9D", explanation: "Prompt instructions alone are probabilistic. Few-shot examples + tool_use = deterministic, reliable formatting." }] },
+      { name: "Test Set 4", questions: [{ question: "What does the 'lost in the middle' problem refer to?", options: ["Losing data during processing", "Models processing beginning/end better than middle content", "Network communication issues", "Token overflow"], correct: 1, domain: "D5", color: "#E63946", explanation: "Transformers process beginning and end of context with more attention. Middle content may be overlooked, so structure context strategically." }, { question: "When should you use prompt caching?", options: ["Always, for all requests", "For large, reusable content blocks across multiple requests", "Only for short prompts", "Never in production"], correct: 1, domain: "D4", color: "#457B9D", explanation: "Prompt caching saves 90% of cached token costs. Minimum 1024 tokens. Perfect for large docs reused across requests." }, { question: "What is the difference between resources and tools in MCP?", options: ["No difference, they're the same", "Resources are read-only; tools have side effects", "Tools are read-only; resources have side effects", "Resources are faster"], correct: 1, domain: "D2", color: "#E9C46A", explanation: "Resources = app-controlled, read-only data (like GET). Tools = model-controlled, can have side effects (like POST/DELETE)." }, { question: "How do you prevent Claude Code from reading .env files?", options: ["Use allowed-tools to restrict file access", "Set permissions in CLAUDE.md", "PreToolUse hook matching Read + Grep tools", "Environment variables auto-protected"], correct: 2, domain: "D3", color: "#E76F51", explanation: "PreToolUse hooks provide DETERMINISTIC guarantees. Exit code 2 blocks execution before file read happens." }, { question: "What metric should you use to evaluate multi-agent system performance instead of just aggregate accuracy?", options: ["Average response time", "Stratified analysis by document/case type", "Total token count", "Number of tool calls"], correct: 1, domain: "D5", color: "#E63946", explanation: "Aggregate accuracy (97%) can MASK poor performance on specific types. Stratified analysis reveals type-specific weaknesses." }] },
+      { name: "Test Set 5", questions: [{ question: "What is the correct stop_reason value to continue the agentic loop?", options: ["'continue'", "'tool_use'", "'next'", "'loop'"], correct: 1, domain: "D1", color: "#E63946", explanation: "stop_reason: 'tool_use' means Claude wants to call a tool. 'end_turn' means conversation is complete." }, { question: "Which scoring approach is most reliable for deterministic schema compliance?", options: ["Checking temperature setting", "tool_use with JSON schemas", "Regex validation in system prompt", "Manual post-processing"], correct: 1, domain: "D4", color: "#457B9D", explanation: "tool_use eliminates JSON syntax errors. Semantic errors (wrong values) still possible, but syntax guaranteed." }, { question: "What is an anti-pattern when implementing agentic loops?", options: ["Checking stop_reason field", "Parsing natural language for 'done' keywords", "Appending tool results to conversation", "Implementing retry logic"], correct: 1, domain: "D1", color: "#E63946", explanation: "NEVER parse NL to detect loop end. Use stop_reason. Arbitrary caps ('max 10 loops') are also anti-patterns." }, { question: "How should you handle structured errors from MCP tools?", options: ["Return generic 'Operation failed' message", "Return errorCategory + isRetryable + description for intelligent recovery", "Silently fail and return empty results", "Escalate all errors immediately"], correct: 1, domain: "D2", color: "#E9C46A", explanation: "Structured errors enable coordinators to make informed recovery decisions. Generic errors prevent intelligent handling." }, { question: "What's the key difference between workflows and agents?", options: ["Workflows are always faster", "Workflows = predetermined, testable; Agents = autonomous, flexible", "Agents use more tokens", "Both are identical"], correct: 1, domain: "D1", color: "#E63946", explanation: "Workflows have fixed sequences (reliable, testable). Agents make dynamic decisions (flexible but less predictable)." }] },
+      { name: "Test Set 6", questions: [{ question: "What transport method is most common for local MCP development?", options: ["HTTP REST API", "Standard input/output (stdio)", "WebSockets", "gRPC"], correct: 1, domain: "D2", color: "#E9C46A", explanation: "Stdio is simplest for local dev - no network config needed. Direct process communication." }, { question: "When is plan mode most appropriate in Claude Code?", options: ["For simple single-file fixes", "For large-scale changes with architectural decisions", "Never use plan mode", "Only for code reviews"], correct: 1, domain: "D3", color: "#E76F51", explanation: "Plan mode enables safe exploration BEFORE changes. Use when complexity is stated upfront, not waiting for it to 'emerge'." }, { question: "What does the evaluator-optimizer workflow pattern accomplish?", options: ["Only generation, no feedback", "Generate → evaluate → improve → loop until quality meets criteria", "Only evaluation, no improvement", "Only optimization"], correct: 1, domain: "D1", color: "#E63946", explanation: "Generate output → Grade quality → Improve → Repeat. Systematic quality improvement through iteration." }, { question: "How should you handle escalation to human agents?", options: ["Always investigate first", "Honor explicit customer requests IMMEDIATELY", "Ask why they want a human first", "Check confidence score"], correct: 1, domain: "D5", color: "#E63946", explanation: "IMMEDIATELY escalate when customer explicitly requests human. Don't investigate first - honor their preference." }, { question: "What's the minimum token requirement for prompt caching?", options: ["256 tokens", "512 tokens", "1024 tokens", "2048 tokens"], correct: 2, domain: "D4", color: "#457B9D", explanation: "Prompt caching requires minimum 1024 tokens to be cost-effective. Caches 90% of those tokens on subsequent calls." }] },
+      { name: "Test Set 7", questions: [{ question: "How do glob patterns work in .claude/rules/?", options: ["Apply only to the current directory", "Apply across ALL directories matching the pattern", "Don't work - use separate CLAUDE.md files", "Only support exact filenames"], correct: 1, domain: "D3", color: "#E76F51", explanation: "Glob patterns like '**/*.test.tsx' apply across all directories. Perfect for distributed test file conventions." }, { question: "What should you do if aggregate accuracy is 95% but users report errors on specific document types?", options: ["The 95% is sufficient", "Conduct stratified analysis by document type to find weak areas", "Increase model size", "Ignore type-specific issues"], correct: 1, domain: "D5", color: "#E63946", explanation: "High aggregate accuracy MASKS type-specific failures. Stratified analysis reveals which document types need work." }, { question: "Why is 'too many tools' a problem?", options: ["Performance is slow", "Selection reliability DEGRADES with 18+ tools vs 4-5", "Cost increases significantly", "Memory usage spikes"], correct: 1, domain: "D2", color: "#E9C46A", explanation: "Too many tools → ambiguous routing → errors. 4-5 focused tools with clear descriptions = reliable selection." }, { question: "What's the advantage of using @import in CLAUDE.md?", options: ["Faster execution", "Enables modular, reusable configuration files", "No real advantage", "Required for dark mode"], correct: 1, domain: "D3", color: "#E76F51", explanation: "@import allows CLAUDE.md organization into topic-specific files, keeping configs DRY and maintainable." }, { question: "In tool use, what does tool_choice: 'any' mean?", options: ["Claude may return text", "Claude MUST call a tool", "Claude chooses automatically", "No tool is required"], correct: 1, domain: "D4", color: "#457B9D", explanation: "tool_choice: 'any' = MUST invoke a tool. tool_choice: 'auto' = may return text. Different guarantees." }] },
+      { name: "Test Set 8", questions: [{ question: "What is the correct way to reference a memory file in Claude Code?", options: ["/memory command shows loaded files", "No way to verify", "Check .env", "Manual inspection"], correct: 0, domain: "D3", color: "#E76F51", explanation: "Use /memory command to verify which memory files Claude Code has loaded into the session." }, { question: "How should you structure context for multi-pass reviews?", options: ["Single pass is always best", "Per-file local passes + cross-file integration pass", "Three passes of the entire codebase", "No structure needed"], correct: 1, domain: "D1", color: "#E63946", explanation: "Per-file local passes ensure consistent depth. Integration pass catches cross-file issues. Avoids attention dilution." }, { question: "What type of error should be retried in structured MCP responses?", options: ["All errors should be retried", "Only transient errors marked isRetryable: true", "Business logic errors", "Permission errors"], correct: 1, domain: "D2", color: "#E9C46A", explanation: "Transient (network) errors are retryable. Business/validation/permission errors are not - don't retry them." }, { question: "What is a key characteristic of custom slash commands?", options: ["Only available to the user", "Project-scoped commands shared via VCS", "Can't be customized", "Limited to one per project"], correct: 1, domain: "D3", color: "#E76F51", explanation: "Project-scoped commands in .claude/commands/ are version-controlled and available to all team members." }, { question: "When using few-shot prompting, what is the main benefit over instructions alone?", options: ["Instructions are always sufficient", "Few-shot enables generalization to novel patterns", "Few-shot is slower", "No real difference"], correct: 1, domain: "D4", color: "#457B9D", explanation: "Few-shot demonstrates format by example, enabling models to generalize to cases not explicitly covered." }] },
+      { name: "Test Set 9", questions: [{ question: "What does PostToolUse hook do?", options: ["Prevents tool execution", "Normalizes/transforms results AFTER tool runs", "Schedules tool execution", "Logs tool calls"], correct: 1, domain: "D3", color: "#E76F51", explanation: "PostToolUse operates AFTER tool execution. Perfect for normalizing data, filtering fields, or validating results." }, { question: "How do you ensure deterministic behavior in Claude Code?", options: ["High temperature", "Hooks for programmatic enforcement", "Only system prompts", "luck"], correct: 1, domain: "D3", color: "#E76F51", explanation: "Hooks (PreToolUse/PostToolUse) provide DETERMINISTIC guarantees. Prompts are probabilistic - non-zero failure rate." }, { question: "What's the purpose of trimming tool outputs before accumulation?", options: ["Saves disk space", "Reduces context bloat from 40→5 relevant fields", "No real benefit", "Speeds up API calls"], correct: 1, domain: "D5", color: "#E63946", explanation: "Large tool outputs accumulate quickly. Trim to relevant fields BEFORE appending to conversation history." }, { question: "Which MCP primitive is user-controlled?", options: ["Tools", "Resources", "Prompts", "All three"], correct: 2, domain: "D2", color: "#E9C46A", explanation: "Prompts are USER-CONTROLLED templates selected before inference. Tools are model-controlled. Resources are app-controlled." }, { question: "What's the main risk of narrow decomposition in multi-agent systems?", options: ["Uses too much memory", "Incomplete coverage - missing subtasks", "Too slow", "Over-specification"], correct: 1, domain: "D1", color: "#E63946", explanation: "Narrow coordinator decomposition → subagents execute correctly within narrow scope → gap coverage problem at integration." }] },
+      { name: "Test Set 10", questions: [{ question: "How does code execution work in Claude?", options: ["Runs on Claude's servers", "Runs in isolated Docker container with NO network", "Requires internet access", "Executed client-side"], correct: 1, domain: "D4", color: "#457B9D", explanation: "Code execution is sandboxed in isolated Docker with no network access. Maximum security/isolation." }, { question: "When should you use fresh sessions with summaries vs. resuming sessions?", options: ["Always resume", "Stale tool results → fresh session + summary. Changed files → fresh session", "Never resume", "Always fresh"], correct: 1, domain: "D3", color: "#E76F51", explanation: "If files changed overnight, tool results are stale. Fresh session with injected summary is more reliable than resume." }, { question: "What's the key to enabling intelligent recovery in multi-agent systems?", options: ["Ignoring errors silently", "Structured error context: category, type, partial results", "Generic error messages", "No error handling"], correct: 1, domain: "D1", color: "#E63946", explanation: "Structured errors + context enable informed recovery decisions. Generic 'failed' prevents intelligent handling." }, { question: "Why might you choose routing over parallelization?", options: ["Routing is always faster", "Different content types need different pipelines; parallelization inappropriate", "Parallelization never works", "They're identical"], correct: 1, domain: "D1", color: "#E63946", explanation: "Routing directs content to specialized pipelines. Parallelization evaluates independent options simultaneously. Different patterns." }, { question: "What does isError flag indicate in MCP?", options: ["Network connectivity issue", "Successful tool execution", "Tool encountered error - check errorCategory for type", "Data format problem"], correct: 2, domain: "D2", color: "#E9C46A", explanation: "isError: true signals failure. errorCategory tells you the TYPE (transient/validation/business/permission) for intelligent handling." }] },
+      { name: "Test Set 11", questions: [{ question: "What is the most reliable way to get consistent JSON output?", options: ["Temperature = 0 with instructions", "tool_use with JSON schemas (prevents syntax errors)", "Regex post-processing", "Random selection"], correct: 1, domain: "D4", color: "#457B9D", explanation: "tool_use eliminates syntax errors. Semantic errors (wrong values) still possible, but format guaranteed." }, { question: "How should new team members get coding conventions?", options: ["Verbal explanation", "Project-level .claude/CLAUDE.md (shared via VCS)", "Individual ~/.claude/CLAUDE.md files", "No way to share"], correct: 1, domain: "D3", color: "#E76F51", explanation: "Project-level config is shared via VCS. User-level configs are personal and NOT shared with the team." }, { question: "What's the primary purpose of MCP?", options: ["Replace the API", "Provide context + tools WITHOUT tedious integration", "Database management", "Security enforcement"], correct: 1, domain: "D2", color: "#E9C46A", explanation: "MCP = communication layer that provides context and tools with minimal integration overhead." }, { question: "When is PreToolUse hook execution blocked?", options: ["Never", "With exit code 2 → execution prevented", "Only for Read tool", "Only for Grep"], correct: 1, domain: "D3", color: "#E76F51", explanation: "PreToolUse with exit code 2 blocks the tool from executing. Perfect for permission checks before sensitive operations." }, { question: "What's the main limitation of batch processing API?", options: ["No cost savings", "Up to 24h delay + no latency SLA = unsuitable for blocking tasks", "Limited to 10 requests", "No tool use support"], correct: 1, domain: "D4", color: "#457B9D", explanation: "Batch = 50% savings + 24h window but NO latency guarantee. Perfect for overnight reports, not pre-merge checks." }] }
+    ];
+
     // STATE
     let examQuestions = [];
     let currentExamQ = 0;
     let examAnswers = {};
     let currentRefCategory = "All";
+    let currentTestSetIndex = 0;
 
     // INITIALIZE
     function init() {
@@ -762,8 +768,8 @@
     }
 
     function toggleTopic(topicId, color) {
-      const btn = document.querySelector(`#topic-${topicId} .topic-button`);
       const content = document.getElementById(`topic-${topicId}`);
+      const btn = content.parentElement.querySelector('.topic-button');
       const toggle = btn.querySelector('.topic-toggle');
       btn.style.background = content.classList.contains('active') ? 'transparent' : `${color}08`;
       toggle.textContent = content.classList.contains('active') ? '+' : '−';
@@ -801,7 +807,6 @@
 
       html += '</div>';
       document.getElementById('ref').innerHTML = html;
-      document.getElementById('refCategories').innerHTML = cats.map(c => `<button class="ref-category-btn ${c === 'All' ? 'active' : ''}" onclick="filterByCategory('${c}')">${c}</button>`).join('');
     }
 
     function filterByCategory(cat) {
@@ -821,14 +826,30 @@
     }
 
     function renderExam() {
-      examQuestions = LEARNING_PATH.flatMap(m => m.topics.filter(t => t.scenario).map(t => ({ ...t.scenario, domain: m.examDomains[0], color: m.color })));
+      // Use backup test set or original questions
+      if (currentTestSetIndex === 0) {
+        examQuestions = LEARNING_PATH.flatMap(m => m.topics.filter(t => t.scenario).map(t => ({ ...t.scenario, domain: m.examDomains[0], color: m.color })));
+      } else {
+        examQuestions = BACKUP_TEST_SETS[currentTestSetIndex - 1].questions;
+      }
+      
+      // Shuffle questions
       const shuffled = [...examQuestions];
       for (let i = shuffled.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
         [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
       }
       examQuestions = shuffled;
+      currentExamQ = 0;
+      examAnswers = {};
       renderExamQuestion();
+    }
+
+    function generateNewTestSet() {
+      // Cycle through test sets
+      currentTestSetIndex = (currentTestSetIndex + 1) % (BACKUP_TEST_SETS.length + 1);
+      const testName = currentTestSetIndex === 0 ? "Original Test Set" : BACKUP_TEST_SETS[currentTestSetIndex - 1].name;
+      renderExam();
     }
 
     function renderExamQuestion() {
@@ -838,7 +859,12 @@
       }
       const q = examQuestions[currentExamQ];
       const progress = ((currentExamQ + 1) / examQuestions.length) * 100;
+      const testSetName = currentTestSetIndex === 0 ? "Original Test Set" : BACKUP_TEST_SETS[currentTestSetIndex - 1].name;
       let html = `
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+          <span style="font-size: 11px; font-weight: 600; color: #333333;">${testSetName}</span>
+          <button onclick="generateNewTestSet()" style="padding: 5px 12px; border-radius: 6px; border: 1px solid #d0d0d0; background: #f5f5f5; color: #333333; font-size: 10px; font-weight: 600; cursor: pointer; transition: all 0.2s;">🔄 Generate New Test</button>
+        </div>
         <div class="exam-progress">
           <span class="exam-domain" style="background: ${q.color}22; color: ${q.color}; padding: 2px 8px;">${q.domain}</span>
           <span class="exam-counter">${currentExamQ + 1}/${examQuestions.length}</span>
@@ -908,6 +934,7 @@
     }
 
     function retakeExam() {
+      currentTestSetIndex = 0;
       currentExamQ = 0;
       examAnswers = {};
       renderExam();
