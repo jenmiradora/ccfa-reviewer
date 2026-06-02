@@ -1671,31 +1671,59 @@
     function toggleModule(modId) {
       const btn = document.querySelector(`#mod-${modId} .module-button`);
       const content = document.getElementById(`content-${modId}`);
+      if (!btn || !content) {
+        console.error(`toggleModule: Could not find module ${modId}`);
+        return;
+      }
       btn.classList.toggle('active');
       content.classList.toggle('active');
     }
 
     function toggleTopic(topicId, color) {
       const content = document.getElementById(`topic-${topicId}`);
+      if (!content) {
+        console.error(`toggleTopic: Could not find topic ${topicId}`);
+        return;
+      }
       const btn = content.parentElement.querySelector('.topic-button');
+      if (!btn) {
+        console.error(`toggleTopic: Could not find button for topic ${topicId}`);
+        return;
+      }
       const toggle = btn.querySelector('.topic-toggle');
+      if (!toggle) {
+        console.error(`toggleTopic: Could not find toggle for topic ${topicId}`);
+        return;
+      }
       btn.style.background = content.classList.contains('active') ? 'transparent' : `${color}08`;
       toggle.textContent = content.classList.contains('active') ? '+' : '−';
       content.classList.toggle('active');
     }
 
     function toggleScenario(topicId) {
-      document.getElementById(`scenario-${topicId}`).classList.toggle('active');
+      const scenario = document.getElementById(`scenario-${topicId}`);
+      if (!scenario) {
+        console.error(`toggleScenario: Could not find scenario ${topicId}`);
+        return;
+      }
+      scenario.classList.toggle('active');
     }
 
     function answerScenario(topicId, selected, correct) {
       const buttons = document.querySelectorAll(`#scenario-${topicId} .option-button`);
+      if (!buttons || buttons.length === 0) {
+        console.error(`answerScenario: Could not find scenario buttons for ${topicId}`);
+        return;
+      }
       buttons.forEach((b, i) => {
         b.classList.remove('correct', 'incorrect');
         if (i === correct) b.classList.add('correct');
         else if (i === selected && i !== correct) b.classList.add('incorrect');
       });
-      document.getElementById(`exp-${topicId}`).style.display = 'block';
+      const exp = document.getElementById(`exp-${topicId}`);
+      if (exp) {
+        exp.style.display = 'block';
+      }
     }
 
     function renderQuickRef() {
